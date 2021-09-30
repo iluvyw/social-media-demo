@@ -40,4 +40,20 @@ router.post('/', (req,res) => {
     console.log('Done')
 })
 
+router.get('/:word', (req,res) => {
+    const { word } = req.params
+    db.query(
+        'select * from Card where word = ?',
+        [word],
+        (error, result, field) => {
+            if (error) {
+                res.send(error.code)
+            }
+            else {
+                res.json(result)
+            }
+        }
+    )
+})
+
 module.exports = router

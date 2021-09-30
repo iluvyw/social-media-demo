@@ -8,7 +8,7 @@ export default function NewCard() {
 
     const handleSubmit = () => {
         axios.post('http://localhost:3001/card',{
-            word: word, 
+            word: word.toLowerCase(), 
             meaning: meaning
         })
         .then(response => {
@@ -32,12 +32,12 @@ export default function NewCard() {
     }
 
     return (
-        <div>
+        <div className='new-card'>
             <label>Word</label>
-            <input placeholder='Word...' onChange={(e) => handleWordChange(e)} value={word}/>
+            <input className='input' placeholder='Word...' onChange={(e) => handleWordChange(e)} value={word}/>
             <label>Meaning</label>
-            <input placeholder='Meaning...' onChange={(e) => handleMeaningChange(e)} value={meaning}/>
-            <button onClick={() => handleSubmit()}>Submit</button>
+            <input className='input' placeholder='Meaning...' onChange={(e) => handleMeaningChange(e)} value={meaning}/>
+            <button className='button' onClick={() => handleSubmit()}>Submit</button>
             <Link to='/'>Back</Link>
         </div>
     )

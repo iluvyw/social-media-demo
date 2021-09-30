@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import Card from '../components/Card/Card'
+import './Page.css'
 
 export default function Home() {
     const [cardList,setCardList] = useState([])
@@ -10,16 +12,15 @@ export default function Home() {
             setCardList(response.data)
         }))
         .catch(error => console.log(error))
-        return () => {}
-    })
+        return () => {
+            setCardList([])
+        }
+    },[])
     
     return (
-        <div>
-            {cardList.map(card => <div key={card.word}>
-                <h1>{card.word}</h1>
-                <h2>{card.meaning}</h2>
-            </div>)}
-            <Link to='/newcard'>New Card</Link>
+        <div className='home'>
+            {cardList.map(card => <Card word={card.word} meaning={card.meaning}/>)}
+            <Link className='link' to='/newcard'>New Card</Link>
         </div>
     )
 }

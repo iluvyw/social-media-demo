@@ -1,0 +1,10 @@
+.card-container {
+    border: solid black;
+    margin-top: 30px;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background-color: burlywood;
+}
