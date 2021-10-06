@@ -1,0 +1,11 @@
+.post-container {
+    width: 600px;
+    height: 2000px;
+    background-color: chocolate;
+    border-radius: 10px;
+    display: flex;
+    margin: 20px;
+    flex-direction: column;
+    position: relative;
+    align-items: center;
+}

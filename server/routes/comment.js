@@ -9,12 +9,14 @@ const db = mysql.createConnection({
     database: 'App'
 })
 
-router.get('/', (req,res) => {
+router.get('/:postId', (req, res) => {
+    const {postId} = req.params
     db.query(
-        'select * from Card',
+        'select * from Comments where postId = ?',
+        [postId],
         (error, result, field) => {
-            if (error) {
-                console.log(error)
+            if(error) {
+                res.send({error: error.code})
             }
             else {
                 res.json(result)
@@ -23,37 +25,36 @@ router.get('/', (req,res) => {
     )
 })
 
-router.post('/', (req,res) => {
-    const {word, meaning} = req.body
+router.post('/', (req, res) => {
+    const {userId, postId, body} = req.body
     db.query(
-        'insert into Card(word,meaning) values (?,?)',
-        [word, meaning],
+        'insert into Comments(postId, userId, body, createAt) values (?,?,?,now())',
+        [postId,userId,body],
         (error, result, field) => {
-            if (error) {
-                res.send(error.code)
+            if(error) {
+                res.send({error: error.code})
             }
             else {
                 res.json(result)
             }
         }
     )
-    console.log('Done')
 })
 
-router.get('/:word', (req,res) => {
-    const { word } = req.params
+router.delete('/', (req, res) => {
+    const {id} = req.body
     db.query(
-        'select * from Card where word = ?',
-        [word],
+        'delete from Comments where id = ?',
+        [id],
         (error, result, field) => {
-            if (error) {
-                res.send(error.code)
+            if(error) {
+                res.send({error: error.code})
             }
             else {
                 res.json(result)
             }
         }
-    )
+    ) 
 })
 
 module.exports = router

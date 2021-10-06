@@ -11,9 +11,19 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({extended: false}))
 
-const card = require('./routes/card')
+const user = require('./routes/user')
+const auth = require('./routes/auth')
+const comment = require('./routes/comment')
+const follow = require('./routes/follow')
+const like = require('./routes/like')
+const post = require('./routes/post')
 
-app.use('/card',card)
+app.use('/user',user)
+app.use('/auth',auth)
+app.use('/comment',comment)
+app.use('/follow',follow)
+app.use('/like',like)
+app.use('/post',post)
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`)
