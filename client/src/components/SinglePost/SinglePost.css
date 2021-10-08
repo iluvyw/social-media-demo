@@ -9,3 +9,7 @@
     position: relative;
     align-items: center;
 }
+
+.post-container img{
+    width: 100%;
+}

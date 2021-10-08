@@ -26,10 +26,10 @@ router.get('/:userId', (req, res) => {
 })
 
 router.post('/', (req, res) => {
-    const {userId, image, body} = req.body
+    const {userId, username, image, body} = req.body
     db.query(
-        'insert into Posts(userId, image, body) values (?,?,?)',
-        [userId,image,body],
+        'insert into Posts(userId, username, image, body) values (?,?,?,?)',
+        [userId,username,image,body],
         (error, result, field) => {
             if(error) {
                 res.send({error: error.code})

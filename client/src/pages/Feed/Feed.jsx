@@ -43,14 +43,20 @@ export default function Feed() {
     return (
         <div className='feed-container'>
             <nav className='nav-container'>
-                <a href='/'>Facebook</a>
-                <a href='/'>Create Post</a>
-                <a href='/profile'><img src='https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png' alt='avatar' /></a>
+                <div className='nav-left'>
+                    <a href='/'>Facebook</a>
+                </div>
+                <div className='nav-mid'>
+                    <a href='/newpost'>Create Post</a>
+                </div>
+                <div className='nav-right'>
+                    <a href='/profile'><img src='https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png' alt='avatar' /></a>
+                </div>
             </nav>
             <div className='big-container'>
                 <div className='posts-container'>
                     {
-                        postList && postList.map(item => <SinglePost key={item.id} id={item.id} userId={item.userId} image={item.image} body={item.body} />)
+                        postList && postList.map(item => <SinglePost key={item.id} id={item.id} username={item.username} userId={item.userId} image={item.image} body={item.body} />)
                     }
                 </div>
                 <div className='users-container'>
