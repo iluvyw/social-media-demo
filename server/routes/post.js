@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const mysql = require('mysql2')
+const upload = require('../middleware/UploadMiddleware')
+const path = require('path');
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -8,6 +10,8 @@ const db = mysql.createConnection({
     password: 'password',
     database: 'App'
 })
+
+router.use('/images',express.static(path.join(path.resolve(__dirname,'..'),'/Images/')))
 
 router.get('/:userId', (req, res) => {
     const {userId} = req.params
@@ -25,10 +29,11 @@ router.get('/:userId', (req, res) => {
     )
 })
 
-router.post('/', (req, res) => {
-    const {userId, username, image, body} = req.body
+router.post('/', upload.single('image'), (req, res) => {
+    const {userId, username, body} = req.body
+    const image = req.imageName
     db.query(
-        'insert into Posts(userId, username, image, body) values (?,?,?,?)',
+        'insert into Posts(userId, username, image, body, createAt) values (?,?,?,?,now())',
         [userId,username,image,body],
         (error, result, field) => {
             if(error) {
@@ -60,7 +65,7 @@ router.delete('/', (req, res) => {
 router.get('/feed/:userId', (req,res) => {
     const {userId} = req.params
     db.query(
-        'select * from Posts join Follows on Posts.userId = Follows.userId where Follows.followerId = ?',
+        'select * from Posts join Follows on Posts.userId = Follows.userId where Follows.followerId = ? order by Posts.createAt desc',
         [userId],
         (error, result, field) => {
             if(error) {
@@ -68,7 +73,6 @@ router.get('/feed/:userId', (req,res) => {
             }
             else {
                 res.json(result)
-                console.log(result)
             }
         }
     )
