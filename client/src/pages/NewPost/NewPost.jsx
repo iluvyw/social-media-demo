@@ -4,7 +4,6 @@ import { AuthContext } from '../../helper/AuthContext'
 
 export default function NewPost() {
     const [status,setStatus] = useState("")
-    const [imgLink,setImgLink] = useState("https://images.hdqwalls.com/wallpapers/morzine-france-landscape-4k-bj.jpg")
     const [image,setImage] = useState()
     const [imageUrl,setImageUrl] = useState()
 
@@ -42,14 +41,11 @@ export default function NewPost() {
 
     return (
         <div>
-            <input value={status} onChange={(e) => handleStatusChange(e)}/>
-            <input name="image" type="file" onChange={(e) => {handleImageSubmit(e)}}/>
+            <textarea value={status} onChange={(e) => handleStatusChange(e)} placeholder="What are you thinking?" cols="50" rows="10"></textarea>
+            {/* <input value={status} onChange={(e) => handleStatusChange(e)}/> */}
+            <input name="image" type="file" accept="image/*"  onChange={(e) => {handleImageSubmit(e)}}/>
             <button onClick={() => handlePostSubmit()}>Post</button>
-            {/* <form method='POST' action='http://localhost:3001/post' encType="multipart/form-data">
-                <input name='image' type='file'/>
-                <input type='submit'/>
-            </form> */}
-            <img src={imageUrl}/>
+            <img src={imageUrl} alt="sth"/>
         </div>
     )
 }

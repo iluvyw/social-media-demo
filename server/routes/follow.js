@@ -9,9 +9,25 @@ const db = mysql.createConnection({
     database: 'App'
 })
 
-router.get('/', (req, res) => {
+// router.get('/', (req, res) => {
+//     db.query(
+//         'select * from Follows',
+//         (error, result, field) => {
+//             if(error) {
+//                 res.send({error: error.code})
+//             }
+//             else {
+//                 res.json(result)
+//             }
+//         }
+//     )
+// })
+
+router.get('/follower/:userId', (req, res) => {
+    const { userId } = req.params
     db.query(
-        'select * from Follows',
+        'select * from Follows where userId = ?',
+        [userId],
         (error, result, field) => {
             if(error) {
                 res.send({error: error.code})
@@ -23,10 +39,10 @@ router.get('/', (req, res) => {
     )
 })
 
-router.get('/:userId', (req, res) => {
+router.get('/following/:userId', (req, res) => {
     const { userId } = req.params
     db.query(
-        'select * from Follows where userId = ?',
+        'select * from Follows where followerId = ?',
         [userId],
         (error, result, field) => {
             if(error) {
@@ -69,6 +85,28 @@ router.delete('/', (req, res) => {
             }
         }
     ) 
+})
+
+router.get('/',(req,res) => {
+    let followerId = req.query.followerId
+    let userId = req.query.userId
+    db.query(
+        'select * from Follows where (followerId = ? and userId = ?)',
+        [followerId,userId],
+        (error, result, field) => {
+            if(error) {
+                res.send({error: error.code})
+            }
+            else {
+                if (result.length > 0){
+                    res.send('Unfollow')
+                }
+                else{
+                    res.send('Follow')
+                }
+            }
+        }
+    )
 })
 
 module.exports = router

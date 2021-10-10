@@ -1,15 +1,41 @@
 .post-container {
-    width: 600px;
-    height: 2000px;
-    background-color: chocolate;
+    background-color: #d4c1a4;
+    width: 80%;
     border-radius: 10px;
     display: flex;
     margin: 20px;
     flex-direction: column;
     position: relative;
     align-items: center;
+    box-shadow: 5px 10px #888888;
 }
 
 .post-container img{
     width: 100%;
+}
+
+.post-header {
+    height: 60px;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.post-header .avatar{
+    height: 80%;
+    width: auto;
+    border-radius: 50px;
+    margin-right: 10px;
+}
+
+.post-image {
+    width: 100%;
+    height: auto;
+}
+
+.post-status{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 90%;
 }

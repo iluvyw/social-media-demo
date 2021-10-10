@@ -44,7 +44,7 @@ export default function Feed() {
         <div className='feed-container'>
             <nav className='nav-container'>
                 <div className='nav-left'>
-                    <a href='/'>Facebook</a>
+                    <a href='/'>Anstagram</a>
                 </div>
                 <div className='nav-mid'>
                     <a href='/newpost'>Create Post</a>

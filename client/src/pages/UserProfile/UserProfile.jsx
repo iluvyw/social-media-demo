@@ -1,18 +1,30 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { AuthContext } from '../../helper/AuthContext'
-import './Profile.css'
+import React, { useEffect, useState } from 'react'
+import './UserProfile.css'
 import axios from 'axios'
+import {useParams} from 'react-router-dom'
 
-export default function Profile() {
-    const { isAuth, setIsAuth } = useContext(AuthContext)
+export default function UserProfile() {
+    const {id} = useParams()
+    const [userInfo,setUserInfo] = useState([])
     const [allPosts, setAllPosts] = useState([])
     const [numPosts,setNumPosts] = useState(0)
     const [followers,setFollowers] = useState(0)
     const [followings,setFollowings] = useState(0)
 
     useEffect(() => {
+        async function fetchUserInfo() {
+            await axios.get(`http://localhost:3001/user/${id}`)
+            .then(response => {
+                if (response.data.error) {
+                    alert(response.data.error)
+                }
+                else {
+                    setUserInfo(response.data)
+                }
+            })
+        }
         async function fetchPosts() {
-            await axios.get(`http://localhost:3001/post/${isAuth.id}`)
+            await axios.get(`http://localhost:3001/post/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -24,7 +36,7 @@ export default function Profile() {
             })
         }
         async function fetchFollowers() {
-            await axios.get(`http://localhost:3001/follow/follower/${isAuth.id}`)
+            await axios.get(`http://localhost:3001/follow/follower/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -35,7 +47,7 @@ export default function Profile() {
             })
         }
         async function fetchFollowings() {
-            await axios.get(`http://localhost:3001/follow/following/${isAuth.id}`)
+            await axios.get(`http://localhost:3001/follow/following/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -45,24 +57,16 @@ export default function Profile() {
                 }
             })
         }
+        fetchUserInfo()
         fetchPosts()
         fetchFollowers()
         fetchFollowings()
-    }, [isAuth,setAllPosts,setNumPosts,setFollowers,setFollowings])
-
-    const handleLogOut = () => {
-        localStorage.removeItem("accessToken")
-        setIsAuth({
-            id: 0,
-            username: "",
-            status: false
-        })
-    }
+    }, [id,setUserInfo,setAllPosts,setNumPosts,setFollowers,setFollowings])
 
     return (
-        <div className='profile-container'>
+        <div className='userprofile-container'>
             <img className='avatar' src={'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt='avatar' />
-            <h1>@{isAuth.username}</h1>
+            <h1>@{userInfo.length > 0 ? userInfo[0].username : "None"}</h1>
             <div className='stat-section'>
                 <h3>{numPosts} posts</h3>
                 <h3>{followers} followers</h3>
@@ -71,9 +75,8 @@ export default function Profile() {
             <h2>Pham Hoang An</h2>
             <h3>I'm a handsome person</h3>
             <div className='post-section'>
-                {allPosts.map(item => <img src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
+                {allPosts.map(item => <img src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
             </div>
-            <button onClick={() => handleLogOut()}><h4>Log Out</h4></button>
         </div>
     )
 }

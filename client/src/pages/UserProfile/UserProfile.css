@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Karla:wght@500&display=swap');
 
-.profile-container {
+.userprofile-container {
     width: 100vw;
     height: 100vh;
     background-color: #d4c1a4;
@@ -11,14 +11,14 @@
     overflow-y: scroll;
 }
 
-.profile-container .avatar{
+.userprofile-container .avatar{
     border-radius: 50px;
     height: 10%;
     width: auto;
     margin: 20px;
 }
 
-.stat-section {
+.userprofile-container .stat-section {
     margin: 10px;
     display: flex;
     flex-direction: row;
@@ -28,7 +28,7 @@
     font-size: 20px;
 }
 
-.post-section {
+.userprofile-container .post-section {
     width: 100%;
     height: 60%;
     overflow-x: scroll;
@@ -38,33 +38,14 @@
     overflow-x: scroll;
 }
 
-.post-section img{
+.userprofile-container .post-section img{
     height: 90%;
     width: auto;
     margin: 0px 10px;
     border-radius: 10px;
 }
 
-.profile-container h2{
+.userprofile-container h2{
     margin: 0px 10px 10px 10px;
     font-size:40px;
-}
-
-.profile-container button{
-    width: 140px;
-    height: 60px;
-    border-radius: 50px;
-    cursor: pointer;
-    margin-bottom: 20px;
-    border: 1px solid black;
-    background-color: #b1a9a1;
-}
-
-.profile-container button:hover{
-    transition-duration: 0.4s;
-    background-color: white;
-}
-
-.profile-container h4{
-    font-size: 20px;
 }

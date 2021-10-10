@@ -3,7 +3,7 @@
 .feed-container{
     height: 100vh;
     width: 100vw;
-    background-color: #fbf1b7;
+    background-color: #d4c1a4;
     font-family: 'Karla', sans-serif;
     color: #120c06;
 }
@@ -27,18 +27,26 @@
 .posts-container{
     height: 100%;
     width: 60%;
-    background-color: cyan;
+    background-color: #fbf1b7;
     overflow-y: scroll;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
+.nav-container .nav-left a{
+    font-size: 30px;
+}
+
 .users-container{
     height: 100%;
-    background-color: red;
+    background-color: #fbf1b7;
     width: 40%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     overflow-y:scroll;
+    overflow-x: hidden;
 }
 
 .nav-container .nav-left{

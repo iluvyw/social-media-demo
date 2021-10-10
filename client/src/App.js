@@ -8,6 +8,7 @@ import axios from 'axios';
 import { AuthContext } from './helper/AuthContext'
 import Feed from './pages/Feed/Feed';
 import NewPost from './pages/NewPost/NewPost';
+import UserProfile from './pages/UserProfile/UserProfile';
 
 function App() {
   const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: true })
@@ -45,13 +46,16 @@ function App() {
             {isAuth.status === true ? <Redirect to='/' /> : <Register />}
           </Route>
           <Route exact path='/profile'>
-            {isAuth.status === false ? <Redirect to='/register' /> : <Profile />}
+            {isAuth.status === false ? <Redirect to='/login' /> : <Profile />}
           </Route>
           <Route exact path='/newpost'>
-            {isAuth.status === false ? <Redirect to='/register' /> : <NewPost />}
+            {isAuth.status === false ? <Redirect to='/login' /> : <NewPost />}
           </Route>
           <Route exact path='/'>
-            {isAuth.status === false ? <Redirect to='/register' /> : <Feed />}
+            {isAuth.status === false ? <Redirect to='/login' /> : <Feed />}
+          </Route>
+          <Route exact path='/user/:id'>
+            {isAuth.status === false ? <Redirect to='/login' /> : <UserProfile />}
           </Route>
         </Switch>
       </BrowserRouter>
