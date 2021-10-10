@@ -8,11 +8,12 @@ import { AuthContext } from '../../helper/AuthContext'
 export default function Feed() {
     const [userList, setUserList] = useState([])
     const [postList, setPostList] = useState([])
-    const contextApi = useContext(AuthContext)
+    const {isAuth} = useContext(AuthContext)
+    const [userInfo,setUserInfo] = useState([])
 
     useEffect(() => {
         async function fetchData() {
-            await axios.get(`http://localhost:3001/post/feed/${contextApi.isAuth.id}`)
+            await axios.get(`http://localhost:3001/post/feed/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -22,8 +23,21 @@ export default function Feed() {
                     }
                 })
         }
+        async function fetchUserInfo() {
+            await axios.get(`http://localhost:3001/user/${isAuth.id}`)
+                .then(response => {
+                    if (response.data.error) {
+                        alert(response.data.error)
+                    }
+                    else {
+                        console.log(response.data)
+                        setUserInfo(response.data)
+                    }
+                })
+        }
+        fetchUserInfo()
         fetchData()
-    }, [setPostList,contextApi])
+    }, [setPostList,isAuth,setUserInfo])
 
     useEffect(() => {
         async function fetchData(){
@@ -44,13 +58,13 @@ export default function Feed() {
         <div className='feed-container'>
             <nav className='nav-container'>
                 <div className='nav-left'>
-                    <a href='/'>Anstagram</a>
+                    <a href='/'>Bonjour</a>
                 </div>
                 <div className='nav-mid'>
                     <a href='/newpost'>Create Post</a>
                 </div>
                 <div className='nav-right'>
-                    <a href='/profile'><img src='https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png' alt='avatar' /></a>
+                    <a href='/profile'><img src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt='avatar' /></a>
                 </div>
             </nav>
             <div className='big-container'>
@@ -61,7 +75,7 @@ export default function Feed() {
                 </div>
                 <div className='users-container'>
                     {
-                        userList.filter(item => item.id !== contextApi.isAuth.id).map((item) =>
+                        userList.filter(item => item.id !== isAuth.id).map((item) =>
                             <User key={item.id} username={item.username} userId={item.id} />
                         )
                     }

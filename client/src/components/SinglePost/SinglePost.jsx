@@ -1,11 +1,30 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 import './SinglePost.css'
 
 export default function SinglePost({id, userId, username, body, image}) {
+    const [userInfo,setUserInfo] = useState([])
+
+    useEffect(() => {
+        async function fetchUserInfo() {
+            await axios.get(`http://localhost:3001/user/${userId}`)
+                .then(response => {
+                    if (response.data.error) {
+                        alert(response.data.error)
+                    }
+                    else {
+                        console.log(response.data)
+                        setUserInfo(response.data)
+                    }
+                })
+        }
+        fetchUserInfo()
+    },[setUserInfo])
+
     return (
         <div className='post-container'>
             <div className='post-header'>
-                <img className='avatar' src={'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt="avatar"/>
+                <img className='avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
                 <h3>{username}</h3>
             </div>
             <div className='post-image'>

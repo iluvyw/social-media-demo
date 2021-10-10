@@ -12,17 +12,6 @@ export default function UserProfile() {
     const [followings,setFollowings] = useState(0)
 
     useEffect(() => {
-        async function fetchUserInfo() {
-            await axios.get(`http://localhost:3001/user/${id}`)
-            .then(response => {
-                if (response.data.error) {
-                    alert(response.data.error)
-                }
-                else {
-                    setUserInfo(response.data)
-                }
-            })
-        }
         async function fetchPosts() {
             await axios.get(`http://localhost:3001/post/${id}`)
             .then(response => {
@@ -57,15 +46,29 @@ export default function UserProfile() {
                 }
             })
         }
-        fetchUserInfo()
         fetchPosts()
         fetchFollowers()
         fetchFollowings()
-    }, [id,setUserInfo,setAllPosts,setNumPosts,setFollowers,setFollowings])
+    }, [id,setAllPosts,setNumPosts,setFollowers,setFollowings])
+
+    useEffect(() => {
+        async function fetchUserInfo() {
+            await axios.get(`http://localhost:3001/user/${id}`)
+            .then(response => {
+                if (response.data.error) {
+                    alert(response.data.error)
+                }
+                else {
+                    setUserInfo(response.data)
+                }
+            })
+        }
+        fetchUserInfo()
+    },[setUserInfo])
 
     return (
         <div className='userprofile-container'>
-            <img className='avatar' src={'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt='avatar' />
+            <img className='avatar' src={userInfo.length > 0 ? `http://localhost:3001/user/images/${userInfo[0].avatar}` :'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt='avatar' />
             <h1>@{userInfo.length > 0 ? userInfo[0].username : "None"}</h1>
             <div className='stat-section'>
                 <h3>{numPosts} posts</h3>
@@ -75,7 +78,7 @@ export default function UserProfile() {
             <h2>Pham Hoang An</h2>
             <h3>I'm a handsome person</h3>
             <div className='post-section'>
-                {allPosts.map(item => <img src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
+                {allPosts.map(item =>  <img src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
             </div>
         </div>
     )

@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@500&display=swap');
+
+.newpost-container{
+    height: 100vh;
+    width: 100vw;
+    background-color: burlywood;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Karla', sans-serif;
+}
+
+.newpost-container .form-container{
+    height: 80%;
+    width: 50%;
+    border-radius: 50px;
+    background-color: #b1a9a1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 5px 5px #888888;
+}
+
+.newpost-container .form-container .image-input{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    justify-content: center;
+}
+
+.newpost-container .form-container .image-input label{
+    width: auto;
+    height: 80%;
+}
+
+.newpost-container .form-container .image-input label img{
+    height: 100%;
+    width: auto;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.newpost-container .form-container textarea{
+    font-size: 20px;
+    font-family: 'Karla', sans-serif;
+    background-color: #d4c1a4;
+    border-radius: 10px;
+}
+
+.newpost-container .form-container button{
+    margin-top: 20px;
+    width: 150px;
+    height: 50px;
+    border-radius: 10px;
+    border: solid black 2px;
+    cursor: pointer;
+    background-color: #958d84;
+}
+
+.newpost-container .form-container button:hover{
+    background-color: white;
+    transition-duration: 0.4s;
+}
+
+.image-input input{
+    display: none;
+    visibility: none;
+}

@@ -7,6 +7,7 @@ import './User.css'
 export default function User({username, userId}) {
     const {isAuth} = useContext(AuthContext)
     const [action,setAction] = useState("Follow")
+    const [userInfo,setUserInfo] = useState([])
     const history = useHistory()
 
     useEffect(() => {
@@ -20,6 +21,21 @@ export default function User({username, userId}) {
             }
         })
     })
+
+    useEffect(() => {
+        async function fetchUserInfo() {
+            await axios.get(`http://localhost:3001/user/${userId}`)
+                .then(response => {
+                    if (response.data.error) {
+                        alert(response.data.error)
+                    }
+                    else {
+                        setUserInfo(response.data)
+                    }
+                })
+        }
+        fetchUserInfo()
+    },[setUserInfo])
     
     const handleFollowClick = () => {
         axios.post(
@@ -59,7 +75,7 @@ export default function User({username, userId}) {
     return (
         <div className="user-container">
             <div className='user-left' onClick={() => handleUserClick()}>
-                <img className='avatar' src={'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt="avatar"/>
+                <img className='avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
                 <h3>{username}</h3>
             </div>
             <div className='user-right'>
