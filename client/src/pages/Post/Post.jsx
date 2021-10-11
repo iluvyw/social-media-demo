@@ -6,7 +6,7 @@ import Comment from '../../components/Comment/Comment'
 import './Post.css'
 
 export default function Post() {
-    const {isAuth} = useContext(AuthContext)
+    const {isAuth,setIsAuth} = useContext(AuthContext)
     const {id} = useParams()
     const [comment,setComment] = useState("")
     const [allComments,setAllComments] = useState([])
@@ -99,13 +99,29 @@ export default function Post() {
                     alert(response.data.error)
                 }
                 else{
-                    console.log('Comment success')
+                    //console.log('Comment success')
                     setComment("")
                     setRefresh(!refresh)
                 }
             })
         }
     }   
+
+    const handleDeletePost = () => {
+        console.log(id)
+        axios.delete(
+            'http://localhost:3001/post',
+            {data: {id: id}}
+        )
+        .then(response => {
+            if (response.data.error){
+                alert(response.data.error)
+            }
+            else{
+                history.goBack()
+            }
+        })
+    }
 
     return (
         <div className='post-main-section'>
@@ -117,6 +133,7 @@ export default function Post() {
                                 <img onClick={() => history.push(`/user/${userInfo.id}`)} src={"http://localhost:3001/user/images/"+userInfo.avatar} alt='avatar'/>
                                 <h3 onClick={() => history.push(`/user/${userInfo.id}`)} className='username'>{userInfo.name}</h3>
                             </div>
+                            {isAuth.id === userInfo.id ? <h3 onClick={() => handleDeletePost()}>Delete</h3> : <></>}
                             <h3 onClick={() => history.goBack()} className='back'>Back</h3>
                         </div>
                         <img id="postImage" src={"http://localhost:3001/post/images/"+postInfo.image} alt='postImage'/>
@@ -128,7 +145,7 @@ export default function Post() {
             </div>
             <div className="comment-section">
                 <div className="all-comment">
-                    {allComments.length > 0 ? allComments.map(item => <Comment key={item.id} commentId={item.id} userId={item.userId} commentBody={item.body}/>) : <h1>No comments</h1>}
+                    {allComments.length > 0 ? allComments.map(item => <Comment key={item.id} commentId={item.id} userId={item.userId} commentBody={item.body} setRefresh={setRefresh}/>) : <h1>No comments</h1>}
                 </div>
                 <div className="input-comment">
                     <input value={comment} onChange={(e) => handleChangeComment(e)} placeholder='Enter your comment...'/>

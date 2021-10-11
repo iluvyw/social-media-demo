@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../helper/AuthContext'
 import './Profile.css'
 import axios from 'axios'
-import {useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 
 export default function Profile() {
     const { isAuth, setIsAuth } = useContext(AuthContext)
@@ -12,10 +12,10 @@ export default function Profile() {
     const [numPosts, setNumPosts] = useState(0)
     const [followers, setFollowers] = useState(0)
     const [followings, setFollowings] = useState(0)
-    const [editName,setEditName] = useState(false)
-    const [editDescription,setEditDescription] = useState(false)
-    const [newName,setNewName] = useState("")
-    const [newDescription,setNewDescription] = useState("")
+    const [editName, setEditName] = useState(false)
+    const [editDescription, setEditDescription] = useState(false)
+    const [newName, setNewName] = useState("")
+    const [newDescription, setNewDescription] = useState("")
 
     const history = useHistory()
 
@@ -71,13 +71,13 @@ export default function Profile() {
         fetchFollowings()
     }, [isAuth, setUserInfo, setAllPosts, setNumPosts, setFollowers, setFollowings])
 
-    const refreshPage = ()=>{
+    const refreshPage = () => {
         window.location.reload();
-    }   
+    }
 
     useEffect(() => {
         updateAvatar()
-    }, [isAuth.id,newImg])
+    }, [isAuth.id, newImg])
 
     useEffect(() => {
         console.log('rerender')
@@ -93,7 +93,7 @@ export default function Profile() {
                 })
         }
         fetchUserInfo()
-    }, [isAuth.id,editName,editDescription])
+    }, [isAuth.id, editName, editDescription])
 
     const updateAvatar = () => {
         if (newImg) {
@@ -105,20 +105,20 @@ export default function Profile() {
                 data,
                 {
                     headers: {
-                      accessToken: localStorage.getItem("accessToken")
+                        accessToken: localStorage.getItem("accessToken")
                     }
                 }
             )
-            .then(response => {
-                if (response.data.error) {
-                    console.log('Error upload image')
-                    refreshPage()
-                }
-                else {
-                    console.log('Update avatar success')
-                    refreshPage()
-                }
-            })
+                .then(response => {
+                    if (response.data.error) {
+                        console.log('Error upload image')
+                        refreshPage()
+                    }
+                    else {
+                        console.log('Update avatar success')
+                        refreshPage()
+                    }
+                })
         }
     }
 
@@ -145,23 +145,23 @@ export default function Profile() {
             {},
             {
                 headers: {
-                  accessToken: localStorage.getItem("accessToken")
+                    accessToken: localStorage.getItem("accessToken")
                 }
             }
         )
-        .then(response => {
-            if (response.data.error) {
-                console.log('Error update name')
-                refreshPage()
-            }
-            else {
-                console.log('Update name success')
-            }
-        })
+            .then(response => {
+                if (response.data.error) {
+                    console.log('Error update name')
+                    refreshPage()
+                }
+                else {
+                    console.log('Update name success')
+                }
+            })
     }
 
     const handleEditNameClick = () => {
-        if (editName === true){
+        if (editName === true) {
             updateName(newName)
         }
         setEditName(!editName)
@@ -177,26 +177,44 @@ export default function Profile() {
             {},
             {
                 headers: {
-                  accessToken: localStorage.getItem("accessToken")
+                    accessToken: localStorage.getItem("accessToken")
                 }
             }
         )
-        .then(response => {
-            if (response.data.error) {
-                console.log('Error upload description')
-                refreshPage()
-            }
-            else {
-                console.log('Update description success')
-            }
-        })
+            .then(response => {
+                if (response.data.error) {
+                    console.log('Error upload description')
+                    refreshPage()
+                }
+                else {
+                    console.log('Update description success')
+                }
+            })
     }
 
     const handleEditDescriptionClick = () => {
-        if (editDescription === true){
+        if (editDescription === true) {
             updateDescription(newDescription)
         }
         setEditDescription(!editDescription)
+    }
+
+    const handleDeleteUser = () => {
+        axios.delete(`http://localhost:3001/user/${isAuth.id}`)
+            .then(response => {
+                if (response.data.error) {
+                    alert(response.data.error)
+                }
+                else {
+                    console.log('Delete successful')
+                    localStorage.removeItem("accessToken")
+                    setIsAuth({
+                        id: 0,
+                        username: "",
+                        status: false
+                    })
+                }
+            })
     }
 
     return (
@@ -209,24 +227,25 @@ export default function Profile() {
             <div className='stat-section'>
                 <div className='left'><h3>{numPosts} posts</h3></div>
                 <div className='middle'><h3>{followers} followers</h3></div>
-                <div className='right'><h3>{followings} followings</h3></div>   
+                <div className='right'><h3>{followings} followings</h3></div>
             </div>
             <div className='name-section'>
                 {
-                    editName === false ? <h2>{userInfo.length > 0 ? userInfo[0].name : ""}</h2> : <input className="name-input" value={newName} placeholder='New name input' type='text' onChange={(e)=>handleUpdateName(e)}/>
+                    editName === false ? <h2>{userInfo.length > 0 ? userInfo[0].name : ""}</h2> : <input className="name-input" value={newName} placeholder='New name input' type='text' onChange={(e) => handleUpdateName(e)} />
                 }
                 <button className='edit-button' onClick={() => handleEditNameClick()}>{editName === false ? "Edit" : "Done"}</button>
             </div>
             <div className="description-section">
                 {
-                    editDescription === false ? <h3>{userInfo.length > 0 ? userInfo[0].description : ""}</h3> : <input className="name-input" value={newDescription} placeholder='New description input' type='text' onChange={(e)=>handleUpdateDescription(e)}/>
+                    editDescription === false ? <h3>{userInfo.length > 0 ? userInfo[0].description : ""}</h3> : <input className="name-input" value={newDescription} placeholder='New description input' type='text' onChange={(e) => handleUpdateDescription(e)} />
                 }
                 <button className='edit-button' onClick={() => handleEditDescriptionClick()}>{editDescription === false ? "Edit" : "Done"}</button>
             </div>
             <div className='post-section'>
-                {allPosts.map(item =>  <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
+                {allPosts.map(item => <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
             </div>
             <button className='log-out-button' onClick={() => handleLogOut()}><h4>Log Out</h4></button>
+            <button className='log-out-button' onClick={() => handleDeleteUser()}><h4>Delete</h4></button>
             <button className='back-button' onClick={() => history.goBack()}>Back</button>
         </div>
     )

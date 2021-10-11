@@ -113,6 +113,59 @@ router.post('/', (req,res) => {
     console.log('Done')
 })
 
+router.delete('/:id', (req,res) => {
+    const {id} = req.params
+    db.query(
+        'delete from Follows where userId = ? or followerId = ?',
+        [id,id],
+        (error, result, field) => {
+            if (error) {
+                res.send({error: error.code})
+            }
+            else {
+                console.log(result)
+            }
+        }
+    )
+    db.query(
+        'delete from Comments where userId = ?',
+        [id],
+        (error, result, field) => {
+            if (error) {
+                res.send({error: error.code})
+            }
+            else {
+                console.log(result)
+            }
+        }
+    )
+    db.query(
+        'delete from Posts where userId = ?',
+        [id],
+        (error, result, field) => {
+            if (error) {
+                res.send({error: error.code})
+            }
+            else {
+                console.log(result)
+            }
+        }
+    )
+    db.query(
+        'delete from Users where id = ?',
+        [id],
+        (error, result, field) => {
+            if (error) {
+                res.send({error: error.code})
+            }
+            else {
+                res.send(result)
+            }
+        }
+    )
+    console.log('Done')
+})
+
 router.get('/:id', (req,res) => {
     const { id } = req.params
     db.query(

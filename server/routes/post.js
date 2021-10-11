@@ -66,11 +66,23 @@ router.post('/', [validateToken,upload.single('image')], (req, res) => {
 router.delete('/', (req, res) => {
     const {id} = req.body
     db.query(
+        'delete from Comments where postId = ?',
+        [id],
+        (error, result, field) => {
+            if(error) {
+                res.send({error: error})
+            }
+            else {
+                console.log('Done delete comments')
+            }
+        }
+    ) 
+    db.query(
         'delete from Posts where id = ?',
         [id],
         (error, result, field) => {
             if(error) {
-                res.send({error: error.code})
+                res.send({error: error})
             }
             else {
                 res.json(result)
