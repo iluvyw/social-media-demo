@@ -70,7 +70,7 @@ export default function Profile() {
 
     const refreshPage = ()=>{
         window.location.reload();
-     }   
+    }   
 
     useEffect(() => {
         updateAvatar()
@@ -99,11 +99,17 @@ export default function Profile() {
             data.append('image', newImg)
             axios.put(
                 'http://localhost:3001/user',
-                data
+                data,
+                {
+                    headers: {
+                      accessToken: localStorage.getItem("accessToken")
+                    }
+                }
             )
             .then(response => {
                 if (response.data.error) {
-                    alert(response.data.error)
+                    console.log('Error upload image')
+                    refreshPage()
                 }
                 else {
                     console.log('Update avatar success')
@@ -132,11 +138,18 @@ export default function Profile() {
 
     const updateName = (newName) => {
         axios.put(
-            `http://localhost:3001/user/update/?userId=${isAuth.id}&name=${newName}`
+            `http://localhost:3001/user/update/?userId=${isAuth.id}&name=${newName}`,
+            {},
+            {
+                headers: {
+                  accessToken: localStorage.getItem("accessToken")
+                }
+            }
         )
         .then(response => {
             if (response.data.error) {
-                alert(response.data.error)
+                console.log('Error update name')
+                refreshPage()
             }
             else {
                 console.log('Update name success')
@@ -157,11 +170,18 @@ export default function Profile() {
 
     const updateDescription = (newDescription) => {
         axios.put(
-            `http://localhost:3001/user/update/?userId=${isAuth.id}&description=${newDescription}`
+            `http://localhost:3001/user/update/?userId=${isAuth.id}&description=${newDescription}`,
+            {},
+            {
+                headers: {
+                  accessToken: localStorage.getItem("accessToken")
+                }
+            }
         )
         .then(response => {
             if (response.data.error) {
-                alert(response.data.error)
+                console.log('Error upload description')
+                refreshPage()
             }
             else {
                 console.log('Update description success')

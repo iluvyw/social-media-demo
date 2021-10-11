@@ -3,6 +3,7 @@ const router = express.Router()
 const mysql = require('mysql2')
 const upload = require('../middleware/UploadMiddleware')
 const path = require('path');
+const { validateToken } = require('../middleware/AuthMiddleware')
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -29,7 +30,7 @@ router.get('/:userId', (req, res) => {
     )
 })
 
-router.post('/', upload.single('image'), (req, res) => {
+router.post('/', [validateToken,upload.single('image')], (req, res) => {
     const {userId, username, body} = req.body
     const image = req.imageName
     db.query(

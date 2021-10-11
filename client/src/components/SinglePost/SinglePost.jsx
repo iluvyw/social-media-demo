@@ -1,9 +1,12 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
+import { useHistory } from 'react-router-dom'
 import './SinglePost.css'
 
 export default function SinglePost({id, userId, username, body, image}) {
     const [userInfo,setUserInfo] = useState([])
+
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchUserInfo() {
@@ -24,8 +27,8 @@ export default function SinglePost({id, userId, username, body, image}) {
     return (
         <div className='post-container'>
             <div className='post-header'>
-                <img className='avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
-                <h3>{username}</h3>
+                <img onClick={() => {history.push(`/user/${userId}`)}} className='avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
+                <h3 onClick={() => {history.push(`/user/${userId}`)}}>{username}</h3>
             </div>
             <div className='post-image'>
                 <img src={"http://localhost:3001/post/images/"+image} alt="postpic"/>

@@ -3,6 +3,7 @@ const router = express.Router()
 const mysql = require('mysql2')
 const upload = require('../middleware/AvatarMiddleware')
 const path = require('path')
+const { validateToken } = require('../middleware/AuthMiddleware')
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -13,7 +14,7 @@ const db = mysql.createConnection({
 
 router.use('/images',express.static(path.join(path.resolve(__dirname,'..'),'/Avatars/')))
 
-router.put('/', upload.single('image'), (req, res) => {
+router.put('/', [validateToken,upload.single('image')], (req, res) => {
     const {userId} = req.body
     const image = req.imageName
     db.query(
@@ -30,7 +31,7 @@ router.put('/', upload.single('image'), (req, res) => {
     )
 })
 
-router.put('/update', (req, res) => {
+router.put('/update',validateToken, (req, res) => {
     const {userId,name,description} = req.query
     if (name){
         db.query(

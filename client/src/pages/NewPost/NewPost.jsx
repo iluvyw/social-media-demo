@@ -21,6 +21,10 @@ export default function NewPost() {
         setImageUrl(URL.createObjectURL(e.target.files[0]))
     }
 
+    const refreshPage = ()=>{
+        window.location.reload();
+    }  
+
     const handlePostSubmit = async () => {
         if (image === null){
             alert('You should add a picture')
@@ -33,11 +37,17 @@ export default function NewPost() {
         data.append('body', status)
         await axios.post(
             'http://localhost:3001/post',
-            data
+            data,
+            {
+                headers: {
+                  accessToken: localStorage.getItem("accessToken")
+                }
+            }
         )
             .then(response => {
                 if (response.data.error) {
-                    alert(response.data.error)
+                    console.log('Error')
+                    refreshPage()
                 }
                 else {
                     history.push('/')
