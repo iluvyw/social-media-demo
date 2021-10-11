@@ -80,7 +80,7 @@ export default function UserProfile() {
             <h2>{userInfo.length > 0 ? userInfo[0].name : ""}</h2>
             <h3>{userInfo.length > 0 ? userInfo[0].description : ""}</h3>
             <div className='post-section'>
-                {allPosts.map(item =>  <img src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
+                {allPosts.map(item =>  <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
             </div>
             <button className='back-button' onClick={() => history.goBack()}>Back</button>
         </div>

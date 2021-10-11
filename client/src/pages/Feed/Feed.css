@@ -99,8 +99,15 @@
     justify-content: center;
 }
 
-.nav-container .nav-right a img{
+.nav-container .nav-right a .image-container{
     height: 70%;
-    border-radius: 50px;
+    width: 5.6vh;
+    overflow: hidden;
+    border-radius: 100px;
+    background-color: #b1a9a1;
+}
+
+.nav-container .nav-right a img{
+    height: 100%;
 }
 

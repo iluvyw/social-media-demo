@@ -30,7 +30,7 @@ export default function Feed() {
                         alert(response.data.error)
                     }
                     else {
-                        console.log(response.data)
+                        //console.log(response.data)
                         setUserInfo(response.data)
                     }
                 })
@@ -64,13 +64,13 @@ export default function Feed() {
                     <a href='/newpost'>Create Post</a>
                 </div>
                 <div className='nav-right'>
-                    <a href='/profile'><img src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt='avatar' /></a>
+                    <a href='/profile'><div className="image-container"><img src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt='avatar' /></div></a>
                 </div>
             </nav>
             <div className='big-container'>
                 <div className='posts-container'>
                     {
-                        postList && postList.map(item => <SinglePost key={item.id} id={item.id} username={item.username} userId={item.userId} image={item.image} body={item.body} />)
+                        postList.length > 0 ? postList.map(item => <SinglePost key={item.id} id={item.id} username={item.username} userId={item.userId} image={item.image} body={item.body} />) : <h1>Your feed is currently empty. Try following someone.</h1>
                     }
                 </div>
                 <div className='users-container'>

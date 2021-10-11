@@ -16,7 +16,7 @@ export default function SinglePost({id, userId, username, body, image}) {
                         alert(response.data.error)
                     }
                     else {
-                        console.log(response.data)
+                        //console.log(response.data)
                         setUserInfo(response.data)
                     }
                 })

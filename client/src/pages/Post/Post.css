@@ -102,6 +102,24 @@
 
 .content-section .header h3{
     font-size: 30px;
+    cursor: pointer;
+}
+
+.content-section .left{
+    width: 50%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.content-section .back{
+    cursor: pointer;
+}
+
+.content-section .back:hover{
+    color: white;
+    transition-duration: 0.4s;
 }
 
 .content-section #postImage {

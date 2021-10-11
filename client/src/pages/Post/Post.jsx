@@ -113,8 +113,11 @@ export default function Post() {
                 {
                     (postInfo !== null && userInfo !== null) ? <>
                         <div className='header'>
-                            <img onClick={() => history.push(`/user/${userInfo.id}`)} src={"http://localhost:3001/user/images/"+userInfo.avatar} alt='avatar'/>
-                            <h3>{userInfo.name}</h3>
+                            <div className='left'>
+                                <img onClick={() => history.push(`/user/${userInfo.id}`)} src={"http://localhost:3001/user/images/"+userInfo.avatar} alt='avatar'/>
+                                <h3 onClick={() => history.push(`/user/${userInfo.id}`)} className='username'>{userInfo.name}</h3>
+                            </div>
+                            <h3 onClick={() => history.goBack()} className='back'>Back</h3>
                         </div>
                         <img id="postImage" src={"http://localhost:3001/post/images/"+postInfo.image} alt='postImage'/>
                         <div className='body'>
