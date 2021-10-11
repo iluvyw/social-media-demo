@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import './UserProfile.css'
 import axios from 'axios'
-import {useParams} from 'react-router-dom'
+import {useHistory, useParams} from 'react-router-dom'
 
 export default function UserProfile() {
     const {id} = useParams()
@@ -10,6 +10,8 @@ export default function UserProfile() {
     const [numPosts,setNumPosts] = useState(0)
     const [followers,setFollowers] = useState(0)
     const [followings,setFollowings] = useState(0)
+
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchPosts() {
@@ -80,6 +82,7 @@ export default function UserProfile() {
             <div className='post-section'>
                 {allPosts.map(item =>  <img src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
             </div>
+            <button className='back-button' onClick={() => history.goBack()}>Back</button>
         </div>
     )
 }

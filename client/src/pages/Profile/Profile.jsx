@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AuthContext } from '../../helper/AuthContext'
 import './Profile.css'
 import axios from 'axios'
+import {useHistory} from 'react-router-dom'
 
 export default function Profile() {
     const { isAuth, setIsAuth } = useContext(AuthContext)
@@ -15,6 +16,8 @@ export default function Profile() {
     const [editDescription,setEditDescription] = useState(false)
     const [newName,setNewName] = useState("")
     const [newDescription,setNewDescription] = useState("")
+
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchUserInfo() {
@@ -224,6 +227,7 @@ export default function Profile() {
                 {allPosts.map(item =>  <img src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
             </div>
             <button className='log-out-button' onClick={() => handleLogOut()}><h4>Log Out</h4></button>
+            <button className='back-button' onClick={() => history.goBack()}>Back</button>
         </div>
     )
 }

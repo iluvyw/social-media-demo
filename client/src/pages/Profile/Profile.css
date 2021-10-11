@@ -116,6 +116,7 @@
     font-family: 'Karla', sans-serif;
     background-color: #b1a9a1;
     cursor: pointer;
+    border: solid 2px black;
 }
 
 .edit-button:hover{
@@ -137,4 +138,22 @@
 
 .description-section h3{
     margin-right: 10px;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 50px;
+    border-radius: 10px;
+    width: 80px;
+    font-size: 20px;
+    font-family: 'Karla', sans-serif;
+    background-color: #b1a9a1;
+    cursor: pointer;
+    border: solid 2px black;
+}
+
+.back-button:hover{
+    background-color: white;
+    transition-duration: 0.4s;
 }
