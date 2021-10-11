@@ -4,6 +4,8 @@ const mysql = require('mysql2')
 const upload = require('../middleware/AvatarMiddleware')
 const path = require('path')
 const { validateToken } = require('../middleware/AuthMiddleware')
+const fs = require('fs')
+const {promisify} = require('util')
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -12,11 +14,28 @@ const db = mysql.createConnection({
     database: 'App'
 })
 
+const unlinkAsync = promisify(fs.unlink)
+
 router.use('/images',express.static(path.join(path.resolve(__dirname,'..'),'/Avatars/')))
 
-router.put('/', [validateToken,upload.single('image')], (req, res) => {
+router.put('/', [validateToken,upload.single('image')], async (req, res) => {
     const {userId} = req.body
     const image = req.imageName
+    let oldImage = ""
+    db.query(
+        'select * from Users where id = ?',
+        [userId],
+        (error, result, field) => {
+            if(error) {
+                res.send({error: error.code})
+            }
+            else {
+                if (result[0].avatar !== "default.webp"){
+                    unlinkAsync(path.join(path.resolve(__dirname,'..'),'/Avatars/',result[0].avatar))
+                }
+            }
+        }
+    )
     db.query(
         'update Users set avatar = ? where id = ?',
         [image,userId],

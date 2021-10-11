@@ -7,6 +7,7 @@
     flex-direction: row;
     font-family: 'Karla', sans-serif;
     background-color:#d4c1a4;
+    padding: 0px 20px;
 }
 
 .content-section{
@@ -15,6 +16,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    overflow-y: hidden;
 }
 
 .comment-section {
@@ -27,7 +29,7 @@
 
 .comment-section .all-comment{
     height: 70%;
-    width: 100%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -36,7 +38,6 @@
     padding-top: 20px;
     padding-bottom: 20px;
     border-radius: 10px;
-    margin-right: 40px;
     background-color: #ceb899;
     border: 1px solid black;
 }
@@ -125,5 +126,4 @@
 .content-section #postImage {
     height: 80%;
     width: auto;
-    border-radius: 10px;
 }
