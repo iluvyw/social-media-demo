@@ -224,7 +224,7 @@ export default function Profile() {
                 <button className='edit-button' onClick={() => handleEditDescriptionClick()}>{editDescription === false ? "Edit" : "Done"}</button>
             </div>
             <div className='post-section'>
-                {allPosts.map(item =>  <img src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
+                {allPosts.map(item =>  <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
             </div>
             <button className='log-out-button' onClick={() => handleLogOut()}><h4>Log Out</h4></button>
             <button className='back-button' onClick={() => history.goBack()}>Back</button>

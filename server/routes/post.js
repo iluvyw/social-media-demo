@@ -30,6 +30,22 @@ router.get('/:userId', (req, res) => {
     )
 })
 
+router.get('/id/:postId', (req, res) => {
+    const {postId} = req.params
+    db.query(
+        'select * from Posts where id = ?',
+        [postId],
+        (error, result, field) => {
+            if(error) {
+                res.send({error: error.code})
+            }
+            else {
+                res.json(result)
+            }
+        }
+    )
+})
+
 router.post('/', [validateToken,upload.single('image')], (req, res) => {
     const {userId, username, body} = req.body
     const image = req.imageName

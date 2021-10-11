@@ -1,0 +1,29 @@
+.single-comment-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: rgb(211, 154, 114);
+    width: 90%;
+    height: auto;
+    border-radius: 5px;
+    margin-top: 5px;
+    border: 0.5px solid black;
+}
+
+.single-comment-container img{
+    height: 7vh;
+    width: auto;
+    border-radius: 100px;
+    margin-right: 10px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.comment-info h3{
+    font-family: sans-serif;
+    font-weight: lighter;
+}
+
+.comment-info h2{
+    cursor: pointer;
+}

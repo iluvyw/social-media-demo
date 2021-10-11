@@ -35,7 +35,7 @@ export default function User({username, userId}) {
                 })
         }
         fetchUserInfo()
-    },[setUserInfo])
+    },[userId,setUserInfo])
     
     const handleFollowClick = () => {
         axios.post(

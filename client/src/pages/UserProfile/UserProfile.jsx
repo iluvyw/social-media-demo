@@ -66,7 +66,7 @@ export default function UserProfile() {
             })
         }
         fetchUserInfo()
-    },[setUserInfo])
+    },[id,setUserInfo])
 
     return (
         <div className='userprofile-container'>

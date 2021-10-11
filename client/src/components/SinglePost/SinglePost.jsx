@@ -22,7 +22,7 @@ export default function SinglePost({id, userId, username, body, image}) {
                 })
         }
         fetchUserInfo()
-    },[setUserInfo])
+    },[userId,setUserInfo])
 
     return (
         <div className='post-container'>
@@ -31,7 +31,7 @@ export default function SinglePost({id, userId, username, body, image}) {
                 <h3 onClick={() => {history.push(`/user/${userId}`)}}>{username}</h3>
             </div>
             <div className='post-image'>
-                <img src={"http://localhost:3001/post/images/"+image} alt="postpic"/>
+                <img onClick={() => history.push(`/post/${id}`)} src={"http://localhost:3001/post/images/"+image} alt="postpic"/>
             </div>
             <div className='action-bar'>
 

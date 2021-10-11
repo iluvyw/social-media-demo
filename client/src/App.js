@@ -9,6 +9,7 @@ import { AuthContext } from './helper/AuthContext'
 import Feed from './pages/Feed/Feed';
 import NewPost from './pages/NewPost/NewPost';
 import UserProfile from './pages/UserProfile/UserProfile';
+import Post from './pages/Post/Post';
 
 function App() {
   const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: true })
@@ -56,6 +57,9 @@ function App() {
           </Route>
           <Route exact path='/user/:id'>
             {isAuth.status === false ? <Redirect to='/login' /> : <UserProfile />}
+          </Route>
+          <Route exact path='/post/:id'>
+            {isAuth.status === false ? <Redirect to='/login' /> : <Post />}
           </Route>
         </Switch>
       </BrowserRouter>

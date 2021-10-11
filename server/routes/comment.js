@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mysql = require('mysql2')
+const { validateToken } = require('../middleware/AuthMiddleware')
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -25,7 +26,7 @@ router.get('/:postId', (req, res) => {
     )
 })
 
-router.post('/', (req, res) => {
+router.post('/',validateToken, (req, res) => {
     const {userId, postId, body} = req.body
     db.query(
         'insert into Comments(postId, userId, body, createAt) values (?,?,?,now())',
