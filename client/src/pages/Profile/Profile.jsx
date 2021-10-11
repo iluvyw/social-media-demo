@@ -11,6 +11,10 @@ export default function Profile() {
     const [numPosts, setNumPosts] = useState(0)
     const [followers, setFollowers] = useState(0)
     const [followings, setFollowings] = useState(0)
+    const [editName,setEditName] = useState(false)
+    const [editDescription,setEditDescription] = useState(false)
+    const [newName,setNewName] = useState("")
+    const [newDescription,setNewDescription] = useState("")
 
     useEffect(() => {
         async function fetchUserInfo() {
@@ -72,6 +76,22 @@ export default function Profile() {
         updateAvatar()
     }, [isAuth.id,newImg])
 
+    useEffect(() => {
+        console.log('rerender')
+        async function fetchUserInfo() {
+            await axios.get(`http://localhost:3001/user/${isAuth.id}`)
+                .then(response => {
+                    if (response.data.error) {
+                        alert(response.data.error)
+                    }
+                    else {
+                        setUserInfo(response.data)
+                    }
+                })
+        }
+        fetchUserInfo()
+    }, [isAuth.id,editName,editDescription])
+
     const updateAvatar = () => {
         if (newImg) {
             let data = new FormData()
@@ -106,6 +126,56 @@ export default function Profile() {
         setNewImg(e.target.files[0])
     }
 
+    const handleUpdateName = (e) => {
+        setNewName(e.target.value)
+    }
+
+    const updateName = (newName) => {
+        axios.put(
+            `http://localhost:3001/user/update/?userId=${isAuth.id}&name=${newName}`
+        )
+        .then(response => {
+            if (response.data.error) {
+                alert(response.data.error)
+            }
+            else {
+                console.log('Update name success')
+            }
+        })
+    }
+
+    const handleEditNameClick = () => {
+        if (editName === true){
+            updateName(newName)
+        }
+        setEditName(!editName)
+    }
+
+    const handleUpdateDescription = (e) => {
+        setNewDescription(e.target.value)
+    }
+
+    const updateDescription = (newDescription) => {
+        axios.put(
+            `http://localhost:3001/user/update/?userId=${isAuth.id}&description=${newDescription}`
+        )
+        .then(response => {
+            if (response.data.error) {
+                alert(response.data.error)
+            }
+            else {
+                console.log('Update description success')
+            }
+        })
+    }
+
+    const handleEditDescriptionClick = () => {
+        if (editDescription === true){
+            updateDescription(newDescription)
+        }
+        setEditDescription(!editDescription)
+    }
+
     return (
         <div className='profile-container'>
             <label for="imgInput">
@@ -118,12 +188,22 @@ export default function Profile() {
                 <div className='middle'><h3>{followers} followers</h3></div>
                 <div className='right'><h3>{followings} followings</h3></div>   
             </div>
-            <h2>Pham Hoang An</h2>
-            <h3>I'm a handsome person</h3>
+            <div className='name-section'>
+                {
+                    editName === false ? <h2>{userInfo.length > 0 ? userInfo[0].name : ""}</h2> : <input className="name-input" value={newName} placeholder='New name input' type='text' onChange={(e)=>handleUpdateName(e)}/>
+                }
+                <button className='edit-button' onClick={() => handleEditNameClick()}>{editName === false ? "Edit" : "Done"}</button>
+            </div>
+            <div className="description-section">
+                {
+                    editDescription === false ? <h3>{userInfo.length > 0 ? userInfo[0].description : ""}</h3> : <input className="name-input" value={newDescription} placeholder='New description input' type='text' onChange={(e)=>handleUpdateDescription(e)}/>
+                }
+                <button className='edit-button' onClick={() => handleEditDescriptionClick()}>{editDescription === false ? "Edit" : "Done"}</button>
+            </div>
             <div className='post-section'>
                 {allPosts.map(item =>  <img src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
             </div>
-            <button onClick={() => handleLogOut()}><h4>Log Out</h4></button>
+            <button className='log-out-button' onClick={() => handleLogOut()}><h4>Log Out</h4></button>
         </div>
     )
 }

@@ -11,7 +11,7 @@
     overflow-y: scroll;
 }
 
-.profile-container input{
+.profile-container #imgInput{
     display: none;
     visibility: none;
 }
@@ -85,7 +85,7 @@
     font-size:40px;
 }
 
-.profile-container button{
+.profile-container .log-out-button{
     width: 140px;
     height: 60px;
     border-radius: 50px;
@@ -95,11 +95,46 @@
     background-color: #b1a9a1;
 }
 
-.profile-container button:hover{
+.profile-container .log-out-button:hover{
     transition-duration: 0.4s;
     background-color: white;
 }
 
 .profile-container h4{
     font-size: 20px;
+}
+
+.profile-container .name-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.edit-button{
+    border-radius: 10px;
+    width: 40px;
+    font-family: 'Karla', sans-serif;
+    background-color: #b1a9a1;
+    cursor: pointer;
+}
+
+.edit-button:hover{
+    background-color: white;
+    transition-duration: 0.4s;
+}
+
+.name-input {
+    font-size: 30px;
+    font-family: 'Karla', sans-serif;
+    background-color: wheat;
+}
+
+.description-section{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.description-section h3{
+    margin-right: 10px;
 }

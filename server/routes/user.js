@@ -30,6 +30,38 @@ router.put('/', upload.single('image'), (req, res) => {
     )
 })
 
+router.put('/update', (req, res) => {
+    const {userId,name,description} = req.query
+    if (name){
+        db.query(
+            'update Users set name = ? where id = ?',
+            [name,userId],
+            (error, result, field) => {
+                if(error) {
+                    res.send({error: error.code})
+                }
+                else {
+                    res.json(result)
+                }
+            }
+        )
+    }
+    if (description){
+        db.query(
+            'update Users set description = ? where id = ?',
+            [description,userId],
+            (error, result, field) => {
+                if(error) {
+                    res.send({error: error.code})
+                }
+                else {
+                    res.json(result)
+                }
+            }
+        )
+    }
+})
+
 router.get('/', (req,res) => {
     db.query(
         'select * from Users',
