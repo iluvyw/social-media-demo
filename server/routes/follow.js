@@ -27,7 +27,7 @@ const db = mysql.createConnection({
 router.get('/follower/:userId', (req, res) => {
     const { userId } = req.params
     db.query(
-        'select * from Follows where userId = ?',
+        'select * from Follows join Users on Follows.followerId = Users.id where Follows.userId = ?',
         [userId],
         (error, result, field) => {
             if(error) {
@@ -43,7 +43,7 @@ router.get('/follower/:userId', (req, res) => {
 router.get('/following/:userId', (req, res) => {
     const { userId } = req.params
     db.query(
-        'select * from Follows where followerId = ?',
+        'select * from Follows join Users on Follows.userId = Users.id where Follows.followerId = ?',
         [userId],
         (error, result, field) => {
             if(error) {

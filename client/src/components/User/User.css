@@ -8,6 +8,7 @@
     margin: 20px 0px;
     border-radius: 10px;
     box-shadow: 5px 5px #888888;
+    z-index: 3;
 }
 
 .user-left {
@@ -32,8 +33,8 @@
     padding-right: 5%;
 }
 
-.user-container .avatar{
-    height: 80%;
+.user-container .user-avatar{
+    height: 48px;
     width: 48px;
     border-radius: 50px;
     margin-right: 10px;

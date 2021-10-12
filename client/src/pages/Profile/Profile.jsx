@@ -3,6 +3,8 @@ import { AuthContext } from '../../helper/AuthContext'
 import './Profile.css'
 import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import FollowDialog from '../../components/FollowDialog/FollowDialog'
+
 
 export default function Profile() {
     const { isAuth, setIsAuth } = useContext(AuthContext)
@@ -16,6 +18,9 @@ export default function Profile() {
     const [editDescription, setEditDescription] = useState(false)
     const [newName, setNewName] = useState("")
     const [newDescription, setNewDescription] = useState("")
+    const [showDialog,setShowDialog] = useState({type: "", userList: [], status: false})
+    const [allFollowers,setAllFollowers] = useState([])
+    const [allFollowings,setAllFollowings] = useState([])
 
     const history = useHistory()
 
@@ -51,6 +56,7 @@ export default function Profile() {
                     }
                     else {
                         setFollowers(response.data.length)
+                        setAllFollowers(response.data)
                     }
                 })
         }
@@ -62,6 +68,7 @@ export default function Profile() {
                     }
                     else {
                         setFollowings(response.data.length)
+                        setAllFollowings(response.data)
                     }
                 })
         }
@@ -69,7 +76,7 @@ export default function Profile() {
         fetchPosts()
         fetchFollowers()
         fetchFollowings()
-    }, [isAuth, setUserInfo, setAllPosts, setNumPosts, setFollowers, setFollowings])
+    }, [isAuth, setUserInfo, setAllPosts, setNumPosts, setFollowers, setFollowings, setAllFollowings, setAllFollowers])
 
     const refreshPage = () => {
         window.location.reload();
@@ -78,6 +85,10 @@ export default function Profile() {
     useEffect(() => {
         updateAvatar()
     }, [isAuth.id, newImg])
+
+    useEffect(() => {
+        console.log('dialog show')
+    },[showDialog])
 
     useEffect(() => {
         console.log('rerender')
@@ -231,8 +242,8 @@ export default function Profile() {
             <h1>@{isAuth.username}</h1>
             <div className='stat-section'>
                 <div className='left'><h3>{numPosts} posts</h3></div>
-                <div className='middle'><h3>{followers} followers</h3></div>
-                <div className='right'><h3>{followings} followings</h3></div>
+                <div className='middle'><h3 onClick={() => setShowDialog({type: "Followers", userList: allFollowers, status: true})}>{followers} followers</h3></div>
+                <div className='right'><h3 onClick={() => setShowDialog({type: "Followings", userList: allFollowings, status: true})}>{followings} followings</h3></div>
             </div>
             <div className='name-section'>
                 {
@@ -252,6 +263,7 @@ export default function Profile() {
             <button className='log-out-button' onClick={() => handleLogOut()}><h4>Log Out</h4></button>
             <button className='log-out-button' onClick={() => handleDeleteUser()}><h4>Delete</h4></button>
             <button className='back-button' onClick={() => history.goBack()}>Back</button>
+            {showDialog.status === true ? <FollowDialog setShowDialog={setShowDialog} type={showDialog.type} userList={showDialog.userList}/> : <></>}
         </div>
     )
 }

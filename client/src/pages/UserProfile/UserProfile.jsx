@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import './UserProfile.css'
 import axios from 'axios'
 import {useHistory, useParams} from 'react-router-dom'
+import FollowDialog from '../../components/FollowDialog/FollowDialog'
 
 export default function UserProfile() {
     const {id} = useParams()
@@ -10,6 +11,9 @@ export default function UserProfile() {
     const [numPosts,setNumPosts] = useState(0)
     const [followers,setFollowers] = useState(0)
     const [followings,setFollowings] = useState(0)
+    const [showDialog,setShowDialog] = useState({type: "", userList: [], status: false})
+    const [allFollowers,setAllFollowers] = useState([])
+    const [allFollowings,setAllFollowings] = useState([])
 
     const history = useHistory()
 
@@ -34,6 +38,7 @@ export default function UserProfile() {
                 }
                 else {
                     setFollowers(response.data.length)
+                    setAllFollowers(response.data)
                 }
             })
         }
@@ -45,13 +50,14 @@ export default function UserProfile() {
                 }
                 else {
                     setFollowings(response.data.length)
+                    setAllFollowings(response.data)
                 }
             })
         }
         fetchPosts()
         fetchFollowers()
         fetchFollowings()
-    }, [id,setAllPosts,setNumPosts,setFollowers,setFollowings])
+    }, [id,setAllPosts,setNumPosts,setFollowers,setFollowings,setAllFollowers,setAllFollowings])
 
     useEffect(() => {
         async function fetchUserInfo() {
@@ -68,14 +74,18 @@ export default function UserProfile() {
         fetchUserInfo()
     },[id,setUserInfo])
 
+    useEffect(() => {
+        console.log('dialog show')
+    },[showDialog])
+
     return (
         <div className='userprofile-container'>
             <img className='avatar' src={userInfo.length > 0 ? `http://localhost:3001/user/images/${userInfo[0].avatar}` :'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt='avatar' />
             <h1>@{userInfo.length > 0 ? userInfo[0].username : ""}</h1>
             <div className='stat-section'>
                 <h3>{numPosts} posts</h3>
-                <h3>{followers} followers</h3>
-                <h3>{followings} following</h3>
+                <h3 className='followers' onClick={() => setShowDialog({type: "Followers", userList: allFollowers, status: true})}>{followers} followers</h3>
+                <h3 className='followings' onClick={() => setShowDialog({type: "Followings", userList: allFollowings, status: true})}>{followings} following</h3>
             </div>
             <h2>{userInfo.length > 0 ? userInfo[0].name : ""}</h2>
             <h3>{userInfo.length > 0 ? userInfo[0].description : ""}</h3>
@@ -83,6 +93,7 @@ export default function UserProfile() {
                 {allPosts.map(item =>  <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
             </div>
             <button className='back-button' onClick={() => history.goBack()}>Back</button>
+            {showDialog.status === true ? <FollowDialog setShowDialog={setShowDialog} type={showDialog.type} userList={showDialog.userList}/> : <></>}
         </div>
     )
 }

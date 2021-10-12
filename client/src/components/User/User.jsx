@@ -75,11 +75,11 @@ export default function User({username, userId}) {
     return (
         <div className="user-container">
             <div className='user-left' onClick={() => handleUserClick()}>
-                <img className='avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
+                <img className='user-avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
                 <h3>{username}</h3>
             </div>
             <div className='user-right'>
-                <button onClick={() => {action === "Follow" ? handleFollowClick() : handleUnfollowClick()}}><h3>{action}</h3></button>
+                {userId !== isAuth.id ? <button onClick={() => {action === "Follow" ? handleFollowClick() : handleUnfollowClick()}}><h3>{action}</h3></button> : <></>}
             </div>
         </div>
     )
