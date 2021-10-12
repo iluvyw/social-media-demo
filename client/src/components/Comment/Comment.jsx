@@ -54,12 +54,14 @@ export default function Comment({commentId,userId,commentBody,setRefresh,refresh
     
     return (
         <div className='single-comment-container'>
-            <img onClick={() => handleUserClick()} src={avatar !== null ? "http://localhost:3001/user/images/"+avatar : ""} alt='avatar'/>
-            <div className='comment-info'>
-                <h2 onClick={() => handleUserClick()}>{username}</h2>
-                <h3>{commentBody}</h3>
+            <div className='left'>
+                <img onClick={() => handleUserClick()} src={avatar !== null ? "http://localhost:3001/user/images/"+avatar : ""} alt='avatar'/>
+                <div className='comment-info'>
+                    <h2 onClick={() => handleUserClick()}>{username}</h2>
+                    <h3>{commentBody}</h3>
+                </div>
             </div>
-            {isAuth.id === userId ? <button onClick={() => handleDeleteComment()}>Delete</button> : <></>}
+            {isAuth.id === userId ? <h2 className='delete' onClick={() => handleDeleteComment()}>Delete</h2> : <></>}
         </div>
     )
 }

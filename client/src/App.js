@@ -12,7 +12,7 @@ import UserProfile from './pages/UserProfile/UserProfile';
 import Post from './pages/Post/Post';
 
 function App() {
-  const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: false })
+  const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: true })
 
   useEffect(() => {
     async function auth(){
@@ -39,6 +39,7 @@ function App() {
   },[setIsAuth])
 
   return (
+    <div className='app'>
     <AuthContext.Provider value={{ isAuth, setIsAuth }}>
       <BrowserRouter>
         <Switch>
@@ -66,6 +67,7 @@ function App() {
         </Switch>
       </BrowserRouter>
     </AuthContext.Provider>
+  </div>
   );
 }
 

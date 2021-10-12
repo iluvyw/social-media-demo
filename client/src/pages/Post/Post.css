@@ -99,6 +99,7 @@
     width: auto;
     border-radius: 100px;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .content-section .header h3{
@@ -126,4 +127,9 @@
 .content-section #postImage {
     height: 80%;
     width: auto;
+}
+
+.delete-post:hover{
+    color: white;
+    transition-duration: 0.4s;
 }

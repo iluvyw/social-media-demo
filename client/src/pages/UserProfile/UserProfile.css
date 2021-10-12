@@ -8,7 +8,6 @@
     flex-direction: column;
     align-items: center;
     font-family: 'Karla', sans-serif;
-    overflow-y: scroll;
 }
 
 .userprofile-container .avatar{

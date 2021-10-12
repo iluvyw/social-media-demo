@@ -30,6 +30,8 @@ export default function Login() {
         .then(response => {
             if (response.data.error){
                 alert(response.data.error)
+                setUsername("")
+                setPassword("")
             }
             else{
                 localStorage.setItem("accessToken",response.data.accessToken)
@@ -60,7 +62,7 @@ export default function Login() {
                 <input value={password} type='password' onChange={(e) => handlePasswordChange(e.target.value)} />
             </div>
             <button onClick={() => handleSubmitClick()}>Submit</button>
-            <button onClick={() => { history.push('/register') }}>To Register</button>
+            <h3 onClick={() => { history.push('/register') }}>Not having an account yet?</h3>
         </div>
     </div>
     )

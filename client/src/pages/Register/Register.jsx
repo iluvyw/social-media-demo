@@ -34,7 +34,7 @@ export default function Register() {
                     alert(response.data.error)
                 }
                 else {
-                    console.log(response)
+                    history.push('/login')
                 }
             })
     }
@@ -56,7 +56,7 @@ export default function Register() {
                     <input value={password} type='password' onChange={(e) => handlePasswordChange(e.target.value)} />
                 </div>
                 <button onClick={() => handleSubmitClick()}>Submit</button>
-                <button onClick={() => { history.push('/login') }}>To Login</button>
+                <h3 onClick={() => { history.push('/login') }}>Already have an account?</h3>
             </div>
         </div>
     )

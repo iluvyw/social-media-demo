@@ -79,12 +79,17 @@ export default function Feed() {
                         postList.length > 0 ? postList.map(item => <SinglePost key={item.id} id={item.id} username={item.username} userId={item.userId} image={item.image} body={item.body} />) : <h1>Your feed is currently empty. Try following someone.</h1>
                     }
                 </div>
-                <div className='users-container'>
-                    {
-                        userList.filter(item => item.id !== isAuth.id).map((item) =>
-                            <User key={item.id} username={item.username} userId={item.id} />
-                        )
-                    }
+                <div className='right-big-container'>
+                    <div className='users-container'>
+                        {
+                            userList.filter(item => item.id !== isAuth.id).map((item) =>
+                                <User key={item.id} username={item.username} userId={item.id} />
+                            )
+                        }
+                    </div>
+                    <div className='credit'>
+                        <h2>Developed By <a href="https://github.com/iluvyw" className='developer-name'>An Pham</a></h2>
+                    </div>
                 </div>
             </div>
         </div>

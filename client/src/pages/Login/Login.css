@@ -1,18 +1,18 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap');
 
 .login-container {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Karla', sans-serif;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: wheat;
+    background-color: bisque;
     width: 100vw;
     height: 100vh;
 }
 
 .box-container {
-    background-color: white;
+    background-color: #d4c1a4;
     width: 50%;
     height: 50%;
     display: flex;
@@ -37,7 +37,7 @@
 .field-box input{
     font-size: 30px;
     justify-content: right;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Karla', sans-serif;
 }
 
 .box-container button{
@@ -49,9 +49,20 @@
     color: white;
     cursor: pointer;
     transition-duration: 0.4s;
+    font-family: 'Karla', sans-serif;
 }
 
 .box-container button:hover{
     background-color: gray;
     color: black;
+}
+
+.box-container h3{
+    font-family: 'Karla', sans-serif;
+    cursor: pointer;
+}
+
+.box-container h3:hover{
+    color: white;
+    transition-duration: 0.4s;
 }

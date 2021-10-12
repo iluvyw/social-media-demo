@@ -9,6 +9,7 @@
     align-items: center;
     font-family: 'Karla', sans-serif;
     overflow-y: scroll;
+    overflow: hidden;
 }
 
 .profile-container #imgInput{

@@ -23,8 +23,8 @@
 }
 
 .post-header .avatar{
-    height: 80%;
-    width: auto;
+    height: 48px;
+    width: 48px;
     border-radius: 50px;
     margin-right: 10px;
     cursor: pointer;

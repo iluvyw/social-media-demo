@@ -138,7 +138,7 @@ export default function Post() {
                                 <img onClick={() => history.push(`/user/${userInfo.id}`)} src={"http://localhost:3001/user/images/"+userInfo.avatar} alt='avatar'/>
                                 <h3 onClick={() => history.push(`/user/${userInfo.id}`)} className='username'>{userInfo.name}</h3>
                             </div>
-                            {isAuth.id === userInfo.id ? <h3 onClick={() => handleDeletePost()}>Delete</h3> : <></>}
+                            {isAuth.id === userInfo.id ? <h3 className='delete-post' onClick={() => handleDeletePost()}>Delete</h3> : <></>}
                             <h3 onClick={() => history.goBack()} className='back'>Back</h3>
                         </div>
                         <img id="postImage" src={"http://localhost:3001/post/images/"+postInfo.image} alt='postImage'/>
