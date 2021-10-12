@@ -224,7 +224,7 @@ export default function Profile() {
 
     return (
         <div className='profile-container'>
-            <label for="imgInput">
+            <label htmlFor="imgInput">
                 <img className='avatar' src={userInfo.length > 0 ? `http://localhost:3001/user/images/${userInfo[0].avatar}` : null} alt='avatar' />
             </label>
             <input id="imgInput" name="image" type="file" accept="image/*" onChange={(e) => { handleUpdateAvatar(e) }} />

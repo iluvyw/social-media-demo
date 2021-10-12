@@ -12,7 +12,7 @@ import UserProfile from './pages/UserProfile/UserProfile';
 import Post from './pages/Post/Post';
 
 function App() {
-  const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: true })
+  const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: false })
 
   useEffect(() => {
     async function auth(){
@@ -26,9 +26,11 @@ function App() {
       )
       .then(response => {
         if (response.data.error) {
+          console.log('False')
           setIsAuth({ ...isAuth, status: false })
         }
         else {
+          console.log('Success')
           setIsAuth({ id: response.data.id, username: response.data.username, status: true })
         }
       })

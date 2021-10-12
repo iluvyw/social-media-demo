@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
     const { username, password } = req.body
     bcrypt.hash(password, 10).then((hash) => {
         db.query(
-            "insert into Users(username,password,avatar,name,description) values (?,?,'default.webp','','')",
+            "insert into Users(username,password,avatar,name,description) values (?,?,'default.webp','Full Name','Biography')",
             [username, hash],
             (error, result, field) => {
                 if (error) {

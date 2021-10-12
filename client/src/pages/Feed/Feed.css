@@ -60,6 +60,14 @@
     overflow: hidden;
 }
 
+.nav-container .nav-left h1{
+    cursor: pointer;
+}
+
+.nav-container .nav-mid h3{
+    cursor: pointer;
+}
+
 .nav-container .nav-right{
     flex-grow: 1;
     height: 100%;
@@ -80,34 +88,10 @@
     overflow: hidden;
 }
 
-.nav-container .nav-mid a{
-    text-decoration: none;
-    color: #120c06;
-}
-
-.nav-container .nav-left a{
-    text-decoration: none;
-    color: #120c06;
-}
-
-.nav-container .nav-right a{
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-}
-
-.nav-container .nav-right a .image-container{
+.nav-container .nav-right  img{
     height: 70%;
     width: 5.6vh;
-    overflow: hidden;
     border-radius: 100px;
-    background-color: #b1a9a1;
-}
-
-.nav-container .nav-right a img{
-    height: 100%;
+    cursor: pointer;
 }
 

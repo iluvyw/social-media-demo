@@ -4,12 +4,14 @@ import SinglePost from '../../components/SinglePost/SinglePost'
 import User from '../../components/User/User'
 import axios from 'axios'
 import { AuthContext } from '../../helper/AuthContext'
+import { useHistory } from 'react-router-dom'
 
 export default function Feed() {
     const [userList, setUserList] = useState([])
     const [postList, setPostList] = useState([])
     const {isAuth} = useContext(AuthContext)
     const [userInfo,setUserInfo] = useState([])
+    const history = useHistory()
 
     useEffect(() => {
         async function fetchData() {
@@ -54,17 +56,21 @@ export default function Feed() {
         fetchData()
     },[setUserList])
 
+    const refreshPage = () => {
+        window.location.reload();
+    }
+
     return (
         <div className='feed-container'>
             <nav className='nav-container'>
                 <div className='nav-left'>
-                    <a href='/'>Bonjour</a>
+                    <h1 onClick={() => refreshPage() /*history.push('/')*/}>Bonjour</h1>
                 </div>
                 <div className='nav-mid'>
-                    <a href='/newpost'>Create Post</a>
+                    <h3 onClick={() => history.push('/newpost')}>Create Post</h3>
                 </div>
                 <div className='nav-right'>
-                    <a href='/profile'><div className="image-container"><img src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt='avatar' /></div></a>
+                    <img onClick={() => history.push('/profile')} src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt='avatar' />
                 </div>
             </nav>
             <div className='big-container'>
