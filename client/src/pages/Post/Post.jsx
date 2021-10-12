@@ -111,7 +111,12 @@ export default function Post() {
         console.log(id)
         axios.delete(
             'http://localhost:3001/post',
-            {data: {id: id}}
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                },
+                data: {id: id}
+            }
         )
         .then(response => {
             if (response.data.error){
@@ -145,7 +150,7 @@ export default function Post() {
             </div>
             <div className="comment-section">
                 <div className="all-comment">
-                    {allComments.length > 0 ? allComments.map(item => <Comment key={item.id} commentId={item.id} userId={item.userId} commentBody={item.body} setRefresh={setRefresh}/>) : <h1>No comments</h1>}
+                    {allComments.length > 0 ? allComments.map(item => <Comment key={item.id} commentId={item.id} userId={item.userId} commentBody={item.body} refresh={refresh} setRefresh={setRefresh}/>) : <h1>No comments</h1>}
                 </div>
                 <div className="input-comment">
                     <input value={comment} onChange={(e) => handleChangeComment(e)} placeholder='Enter your comment...'/>

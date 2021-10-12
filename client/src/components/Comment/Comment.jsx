@@ -4,7 +4,7 @@ import './Comment.css'
 import { useHistory } from 'react-router-dom'
 import { AuthContext } from '../../helper/AuthContext'
 
-export default function Comment({commentId,userId,commentBody,setRefresh}) {
+export default function Comment({commentId,userId,commentBody,setRefresh,refresh}) {
     const {isAuth} = useContext(AuthContext)
     const [avatar,setAvatar] = useState(null)
     const [username,setUsername] = useState("")
@@ -34,7 +34,12 @@ export default function Comment({commentId,userId,commentBody,setRefresh}) {
     const handleDeleteComment = () => {
         axios.delete(
             'http://localhost:3001/comment',
-            {data: {id: commentId}}
+            {
+                headers: {
+                    accessToken: localStorage.getItem("accessToken")
+                },
+                data: {id: commentId}
+            }
         )
         .then(response => {
             if (response.data.error){
@@ -42,7 +47,7 @@ export default function Comment({commentId,userId,commentBody,setRefresh}) {
             }
             else{
                 //console.log("Delete Comment")
-                setRefresh(true)
+                setRefresh(!refresh)
             }
         })
     }

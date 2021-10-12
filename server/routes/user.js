@@ -21,7 +21,6 @@ router.use('/images',express.static(path.join(path.resolve(__dirname,'..'),'/Ava
 router.put('/', [validateToken,upload.single('image')], async (req, res) => {
     const {userId} = req.body
     const image = req.imageName
-    let oldImage = ""
     db.query(
         'select * from Users where id = ?',
         [userId],
@@ -113,7 +112,7 @@ router.post('/', (req,res) => {
     console.log('Done')
 })
 
-router.delete('/:id', (req,res) => {
+router.delete('/:id',validateToken, (req,res) => {
     const {id} = req.params
     db.query(
         'delete from Follows where userId = ? or followerId = ?',
@@ -140,6 +139,22 @@ router.delete('/:id', (req,res) => {
         }
     )
     db.query(
+        'select * from Posts where userId = ?',
+        [id],
+        (error, result, field) => {
+            if(error) {
+                console.log('error')
+                res.send({error: error})
+            }
+            else {
+                for (let i=0;i<result.length;i++){
+                    unlinkAsync(path.join(path.resolve(__dirname,'..'),'/Images/',result[i].image))
+                }
+                console.log('Done delete user all post')
+            }
+        }
+    ) 
+    db.query(
         'delete from Posts where userId = ?',
         [id],
         (error, result, field) => {
@@ -148,6 +163,21 @@ router.delete('/:id', (req,res) => {
             }
             else {
                 console.log(result)
+            }
+        }
+    )
+    db.query(
+        'select * from Users where id = ?',
+        [id],
+        (error, result, field) => {
+            if(error) {
+                res.send({error: error.code})
+            }
+            else {
+                if (result[0].avatar !== "default.webp"){
+                    unlinkAsync(path.join(path.resolve(__dirname,'..'),'/Avatars/',result[0].avatar))
+                }
+                console.log('Done delete user avatar')
             }
         }
     )
@@ -163,7 +193,6 @@ router.delete('/:id', (req,res) => {
             }
         }
     )
-    console.log('Done')
 })
 
 router.get('/:id', (req,res) => {

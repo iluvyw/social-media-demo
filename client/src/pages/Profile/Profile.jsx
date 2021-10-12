@@ -200,7 +200,12 @@ export default function Profile() {
     }
 
     const handleDeleteUser = () => {
-        axios.delete(`http://localhost:3001/user/${isAuth.id}`)
+        axios.delete(
+            `http://localhost:3001/user/${isAuth.id}`,
+            {headers: {
+                accessToken: localStorage.getItem("accessToken")
+            }}
+            )
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)

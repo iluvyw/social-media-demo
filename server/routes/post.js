@@ -4,6 +4,8 @@ const mysql = require('mysql2')
 const upload = require('../middleware/UploadMiddleware')
 const path = require('path');
 const { validateToken } = require('../middleware/AuthMiddleware')
+const fs = require('fs')
+const {promisify} = require('util')
 
 const db = mysql.createConnection({
     host: 'localhost',
@@ -11,6 +13,8 @@ const db = mysql.createConnection({
     password: 'password',
     database: 'App'
 })
+
+const unlinkAsync = promisify(fs.unlink)
 
 router.use('/images',express.static(path.join(path.resolve(__dirname,'..'),'/Images/')))
 
@@ -63,7 +67,7 @@ router.post('/', [validateToken,upload.single('image')], (req, res) => {
     )
 })
 
-router.delete('/', (req, res) => {
+router.delete('/',validateToken, (req, res) => {
     const {id} = req.body
     db.query(
         'delete from Comments where postId = ?',
@@ -74,6 +78,19 @@ router.delete('/', (req, res) => {
             }
             else {
                 console.log('Done delete comments')
+            }
+        }
+    ) 
+    db.query(
+        'select * from Posts where id = ?',
+        [id],
+        (error, result, field) => {
+            if(error) {
+                console.log('error')
+                res.send({error: error})
+            }
+            else {
+                unlinkAsync(path.join(path.resolve(__dirname,'..'),'/Images/',result[0].image))
             }
         }
     ) 

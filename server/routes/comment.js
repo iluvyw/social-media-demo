@@ -42,7 +42,7 @@ router.post('/',validateToken, (req, res) => {
     )
 })
 
-router.delete('/', (req, res) => {
+router.delete('/',validateToken, (req, res) => {
     const {id} = req.body
     db.query(
         'delete from Comments where id = ?',
