@@ -15,14 +15,12 @@ const user = require('./routes/user')
 const auth = require('./routes/auth')
 const comment = require('./routes/comment')
 const follow = require('./routes/follow')
-const like = require('./routes/like')
 const post = require('./routes/post')
 
 app.use('/user',user)
 app.use('/auth',auth)
 app.use('/comment',comment)
 app.use('/follow',follow)
-app.use('/like',like)
 app.use('/post',post)
 
 app.listen(PORT, () => {

@@ -3,6 +3,7 @@ import './UserProfile.css'
 import axios from 'axios'
 import {useHistory, useParams} from 'react-router-dom'
 import FollowDialog from '../../components/FollowDialog/FollowDialog'
+import PageNotFound from '../PageNotFound/PageNotFound'
 
 export default function UserProfile() {
     const {id} = useParams()
@@ -19,7 +20,7 @@ export default function UserProfile() {
 
     useEffect(() => {
         async function fetchPosts() {
-            await axios.get(`http://localhost:3001/post/${id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/post/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -31,7 +32,7 @@ export default function UserProfile() {
             })
         }
         async function fetchFollowers() {
-            await axios.get(`http://localhost:3001/follow/follower/${id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/follow/follower/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -43,7 +44,7 @@ export default function UserProfile() {
             })
         }
         async function fetchFollowings() {
-            await axios.get(`http://localhost:3001/follow/following/${id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/follow/following/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -61,7 +62,7 @@ export default function UserProfile() {
 
     useEffect(() => {
         async function fetchUserInfo() {
-            await axios.get(`http://localhost:3001/user/${id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/user/${id}`)
             .then(response => {
                 if (response.data.error) {
                     alert(response.data.error)
@@ -79,8 +80,9 @@ export default function UserProfile() {
     },[showDialog])
 
     return (
+        userInfo.length > 0 ?
         <div className='userprofile-container'>
-            <img className='avatar' src={userInfo.length > 0 ? `http://localhost:3001/user/images/${userInfo[0].avatar}` :'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt='avatar' />
+            <img className='avatar' src={userInfo.length > 0 ? `${process.env.REACT_APP_SERVER}/user/images/${userInfo[0].avatar}` :'https://cdn.pixabay.com/photo/2018/11/13/21/43/instagram-3814049_960_720.png'} alt='avatar' />
             <h1>@{userInfo.length > 0 ? userInfo[0].username : ""}</h1>
             <div className='stat-section'>
                 <h3>{numPosts} posts</h3>
@@ -90,10 +92,10 @@ export default function UserProfile() {
             <h2>{userInfo.length > 0 ? userInfo[0].name : ""}</h2>
             <h3>{userInfo.length > 0 ? userInfo[0].description : ""}</h3>
             <div className='post-section'>
-                {allPosts.map(item =>  <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postimage' key={item.id} />)}
+                {allPosts.map(item =>  <img onClick={() => history.push(`/post/${item.id}`)} src={`${process.env.REACT_APP_SERVER}/post/images/` + item.image} alt='postimage' key={item.id} />)}
             </div>
             <button className='back-button' onClick={() => history.goBack()}>Back</button>
             {showDialog.status === true ? <FollowDialog setShowDialog={setShowDialog} type={showDialog.type} userList={showDialog.userList}/> : <></>}
-        </div>
+        </div> : <PageNotFound body={"User not found"}/>
     )
 }

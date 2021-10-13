@@ -6,12 +6,13 @@ const path = require('path');
 const { validateToken } = require('../middleware/AuthMiddleware')
 const fs = require('fs')
 const {promisify} = require('util')
+require('dotenv').config()
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'App'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 })
 
 const unlinkAsync = promisify(fs.unlink)

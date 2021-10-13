@@ -10,7 +10,7 @@ export default function SinglePost({id, userId, username, body, image}) {
 
     useEffect(() => {
         async function fetchUserInfo() {
-            await axios.get(`http://localhost:3001/user/${userId}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/user/${userId}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -27,11 +27,11 @@ export default function SinglePost({id, userId, username, body, image}) {
     return (
         <div className='post-container'>
             <div className='post-header'>
-                <img onClick={() => {history.push(`/user/${userId}`)}} className='avatar' src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt="avatar"/>
+                <img onClick={() => {history.push(`/user/${userId}`)}} className='avatar' src={userInfo.length > 0 ? `${process.env.REACT_APP_SERVER}/user/images/` + userInfo[0].avatar : null} alt="avatar"/>
                 <h3 onClick={() => {history.push(`/user/${userId}`)}}>{username}</h3>
             </div>
             <div className='post-image'>
-                <img onClick={() => history.push(`/post/${id}`)} src={"http://localhost:3001/post/images/"+image} alt="postpic"/>
+                <img onClick={() => history.push(`/post/${id}`)} src={`${process.env.REACT_APP_SERVER}/post/images/`+image} alt="postpic"/>
             </div>
             <div className='action-bar'>
 

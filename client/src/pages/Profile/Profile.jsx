@@ -26,7 +26,7 @@ export default function Profile() {
 
     useEffect(() => {
         async function fetchUserInfo() {
-            await axios.get(`http://localhost:3001/user/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/user/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -37,7 +37,7 @@ export default function Profile() {
                 })
         }
         async function fetchPosts() {
-            await axios.get(`http://localhost:3001/post/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/post/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -49,7 +49,7 @@ export default function Profile() {
                 })
         }
         async function fetchFollowers() {
-            await axios.get(`http://localhost:3001/follow/follower/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/follow/follower/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -61,7 +61,7 @@ export default function Profile() {
                 })
         }
         async function fetchFollowings() {
-            await axios.get(`http://localhost:3001/follow/following/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/follow/following/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -93,7 +93,7 @@ export default function Profile() {
     useEffect(() => {
         console.log('rerender')
         async function fetchUserInfo() {
-            await axios.get(`http://localhost:3001/user/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/user/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -112,7 +112,7 @@ export default function Profile() {
             data.append('userId', isAuth.id)
             data.append('image', newImg)
             axios.put(
-                'http://localhost:3001/user',
+                `${process.env.REACT_APP_SERVER}/user`,
                 data,
                 {
                     headers: {
@@ -152,7 +152,7 @@ export default function Profile() {
 
     const updateName = (newName) => {
         axios.put(
-            `http://localhost:3001/user/update/?userId=${isAuth.id}&name=${newName}`,
+            `${process.env.REACT_APP_SERVER}/user/update/?userId=${isAuth.id}&name=${newName}`,
             {},
             {
                 headers: {
@@ -184,7 +184,7 @@ export default function Profile() {
 
     const updateDescription = (newDescription) => {
         axios.put(
-            `http://localhost:3001/user/update/?userId=${isAuth.id}&description=${newDescription}`,
+            `${process.env.REACT_APP_SERVER}/user/update/?userId=${isAuth.id}&description=${newDescription}`,
             {},
             {
                 headers: {
@@ -212,7 +212,7 @@ export default function Profile() {
 
     const handleDeleteUser = () => {
         axios.delete(
-            `http://localhost:3001/user/${isAuth.id}`,
+            `${process.env.REACT_APP_SERVER}/user/${isAuth.id}`,
             {headers: {
                 accessToken: localStorage.getItem("accessToken")
             }}
@@ -236,7 +236,7 @@ export default function Profile() {
     return (
         <div className='profile-container'>
             <label htmlFor="imgInput">
-                <img className='avatar' src={userInfo.length > 0 ? `http://localhost:3001/user/images/${userInfo[0].avatar}` : null} alt='avatar' />
+                <img className='avatar' src={userInfo.length > 0 ? `${process.env.REACT_APP_SERVER}/user/images/${userInfo[0].avatar}` : null} alt='avatar' />
             </label>
             <input id="imgInput" name="image" type="file" accept="image/*" onChange={(e) => { handleUpdateAvatar(e) }} />
             <h1>@{isAuth.username}</h1>
@@ -258,7 +258,7 @@ export default function Profile() {
                 <button className='edit-button' onClick={() => handleEditDescriptionClick()}>{editDescription === false ? "Edit" : "Done"}</button>
             </div>
             <div className='post-section'>
-                {allPosts.map(item => <img onClick={() => history.push(`/post/${item.id}`)} src={"http://localhost:3001/post/images/" + item.image} alt='postpicture' key={item.id} />)}
+                {allPosts.map(item => <img onClick={() => history.push(`/post/${item.id}`)} src={`${process.env.REACT_APP_SERVER}/post/images/` + item.image} alt='postpicture' key={item.id} />)}
             </div>
             <button className='log-out-button' onClick={() => handleLogOut()}><h4>Log Out</h4></button>
             <button className='log-out-button' onClick={() => handleDeleteUser()}><h4>Delete</h4></button>

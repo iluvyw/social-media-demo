@@ -24,7 +24,7 @@ export default function Login() {
 
     const handleSubmitClick = () => {
         axios.post(
-            "http://localhost:3001/auth/login",
+            `${process.env.REACT_APP_SERVER}/auth/login`,
             {username: username, password: password}
         )
         .then(response => {

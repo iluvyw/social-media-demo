@@ -15,7 +15,7 @@ export default function Feed() {
 
     useEffect(() => {
         async function fetchData() {
-            await axios.get(`http://localhost:3001/post/feed/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/post/feed/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -26,7 +26,7 @@ export default function Feed() {
                 })
         }
         async function fetchUserInfo() {
-            await axios.get(`http://localhost:3001/user/${isAuth.id}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/user/${isAuth.id}`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -43,7 +43,7 @@ export default function Feed() {
 
     useEffect(() => {
         async function fetchData(){
-            await axios.get('http://localhost:3001/user')
+            await axios.get(`${process.env.REACT_APP_SERVER}/user`)
                 .then(response => {
                     if (response.data.error) {
                         alert(response.data.error)
@@ -70,7 +70,7 @@ export default function Feed() {
                     <h3 onClick={() => history.push('/newpost')}>Create Post</h3>
                 </div>
                 <div className='nav-right'>
-                    <img onClick={() => history.push('/profile')} src={userInfo.length > 0 ? "http://localhost:3001/user/images/" + userInfo[0].avatar : null} alt='avatar' />
+                    <img onClick={() => history.push('/profile')} src={userInfo.length > 0 ? `${process.env.REACT_APP_SERVER}/user/images/` + userInfo[0].avatar : null} alt='avatar' />
                 </div>
             </nav>
             <div className='big-container'>

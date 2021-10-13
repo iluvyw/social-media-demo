@@ -36,7 +36,7 @@ export default function NewPost() {
         data.append('image', image)
         data.append('body', status)
         await axios.post(
-            'http://localhost:3001/post',
+            `${process.env.REACT_APP_SERVER}/post`,
             data,
             {
                 headers: {

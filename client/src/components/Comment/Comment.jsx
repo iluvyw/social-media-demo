@@ -12,7 +12,7 @@ export default function Comment({commentId,userId,commentBody,setRefresh,refresh
 
     useEffect(() => {
         async function fetchUserInfo(){
-            await axios.get(`http://localhost:3001/user/${userId}`)
+            await axios.get(`${process.env.REACT_APP_SERVER}/user/${userId}`)
             .then(response => {
                 if (response.data.error){
                     alert(response.data.error)
@@ -33,7 +33,7 @@ export default function Comment({commentId,userId,commentBody,setRefresh,refresh
 
     const handleDeleteComment = () => {
         axios.delete(
-            'http://localhost:3001/comment',
+            `${process.env.REACT_APP_SERVER}/comment`,
             {
                 headers: {
                     accessToken: localStorage.getItem("accessToken")
@@ -55,7 +55,7 @@ export default function Comment({commentId,userId,commentBody,setRefresh,refresh
     return (
         <div className='single-comment-container'>
             <div className='left'>
-                <img onClick={() => handleUserClick()} src={avatar !== null ? "http://localhost:3001/user/images/"+avatar : ""} alt='avatar'/>
+                <img onClick={() => handleUserClick()} src={avatar !== null ? `${process.env.REACT_APP_SERVER}/user/images/`+avatar : ""} alt='avatar'/>
                 <div className='comment-info'>
                     <h2 onClick={() => handleUserClick()}>{username}</h2>
                     <h3>{commentBody}</h3>

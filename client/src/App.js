@@ -10,6 +10,7 @@ import Feed from './pages/Feed/Feed';
 import NewPost from './pages/NewPost/NewPost';
 import UserProfile from './pages/UserProfile/UserProfile';
 import Post from './pages/Post/Post';
+import PageNotFound from './pages/PageNotFound/PageNotFound';
 
 function App() {
   const [isAuth, setIsAuth] = useState({ id: 0, username: "", status: true })
@@ -17,7 +18,7 @@ function App() {
   useEffect(() => {
     async function auth(){
       await axios.get(
-        "http://localhost:3001/auth",
+        `${process.env.REACT_APP_SERVER}/auth`,
         {
           headers: {
             accessToken: localStorage.getItem("accessToken")
@@ -63,6 +64,9 @@ function App() {
           </Route>
           <Route exact path='/post/:id'>
             {isAuth.status === false ? <Redirect to='/login' /> : <Post />}
+          </Route>
+          <Route exact path='*'>
+            <PageNotFound body={"Page not found"}/>
           </Route>
         </Switch>
       </BrowserRouter>

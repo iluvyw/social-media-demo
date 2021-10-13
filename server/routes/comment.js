@@ -2,12 +2,13 @@ const express = require('express')
 const router = express.Router()
 const mysql = require('mysql2')
 const { validateToken } = require('../middleware/AuthMiddleware')
+require('dotenv').config()
 
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'password',
-    database: 'App'
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_DATABASE
 })
 
 router.get('/:postId', (req, res) => {

@@ -26,7 +26,7 @@ export default function Register() {
             return
         }
         axios.post(
-            "http://localhost:3001/auth/register",
+            `${process.env.REACT_APP_SERVER}/auth/register`,
             { username: username, password: password }
         )
             .then(response => {
