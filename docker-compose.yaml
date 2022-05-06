@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  database:
+    build: ./database
+    restart: always
+  server:
+    build: ./server
+    ports:
+      - '3001:3001'
+    restart: on-failure:10
+    depends_on:
+      - database
+  client:
+    build: ./client
+    ports:
+      - '3000:3000'
+    stdin_open: true
+    depends_on:
+      - server
